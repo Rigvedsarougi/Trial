@@ -1,6 +1,6 @@
 import os
 import re
-from multiprocessing import Pool
+from concurrent.futures import ProcessPoolExecutor
 from functools import partial
 import pandas as pd
 from pydub import AudioSegment
@@ -55,8 +55,8 @@ def process_audio_file(audio_file, keywords):
     transcription = ""
     unrecognized_chunks_count = 0
 
-    with Pool() as pool:
-        results = pool.map(partial(process_audio_chunk, recognizer=recognizer), chunks)
+    with ProcessPoolExecutor() as executor:
+        results = list(executor.map(partial(process_audio_chunk, recognizer=recognizer), chunks))
 
     for i, text in enumerate(results):
         if text:
