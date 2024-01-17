@@ -3,10 +3,11 @@ import re
 from concurrent.futures import ProcessPoolExecutor
 from functools import partial
 import pandas as pd
+from pydub import AudioSegment
+import speech_recognition as sr
 import streamlit as st
 import tempfile
 import logging
-from audio_processing import process_audio_chunk  # Importing the function from the separate module
 
 logging.basicConfig(level=logging.DEBUG)
 
