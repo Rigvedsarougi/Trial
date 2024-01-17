@@ -8,7 +8,6 @@ import speech_recognition as sr
 import streamlit as st
 import tempfile
 import logging
-from contextlib import closing
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -43,11 +42,9 @@ def process_audio_chunk(chunk, recognizer):
 def process_audio_file(audio_file, keywords):
     recognizer = sr.Recognizer()
 
-    # Save BytesIO to a temporary file
     with tempfile.NamedTemporaryFile(delete=False) as temp_audio_file:
         temp_audio_file.write(audio_file.read())
 
-    # Load temporary file with pydub
     audio = AudioSegment.from_mp3(temp_audio_file.name)
 
     chunk_size_ms = 5000
@@ -56,7 +53,7 @@ def process_audio_file(audio_file, keywords):
     transcription = ""
     unrecognized_chunks_count = 0
 
-    with closing(ProcessPoolExecutor()) as executor:
+    with ProcessPoolExecutor() as executor:
         results = list(executor.map(partial(process_audio_chunk, recognizer=recognizer), chunks))
 
     for i, text in enumerate(results):
