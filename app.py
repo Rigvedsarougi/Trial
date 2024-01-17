@@ -110,9 +110,16 @@ def main():
             '+ 45 Days Trial Classes'
         ]
 
-        results = process_audio_files(audio_files, keywords)
-        result_df = pd.DataFrame(results)
-        st.write(result_df)
+        for audio_file in audio_files:
+            result = process_audio_file([audio_file], keywords)  # Process a single audio file
+            result_df = pd.DataFrame([result])
+            st.write(result_df)
+
+            # Release resources for the processed audio file
+            del result_df
+            del result
+            del audio_file
 
 if __name__ == "__main__":
     main()
+
