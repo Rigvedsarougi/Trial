@@ -6,6 +6,7 @@ import pandas as pd
 import streamlit as st
 import tempfile
 import logging
+from pydub import AudioSegment
 import speech_recognition as sr
 from audio_processing import process_audio_chunk  # Ensure this line is present
 
