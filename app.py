@@ -10,7 +10,6 @@ from pydub import AudioSegment
 import speech_recognition as sr
 from audio_processing import process_audio_chunk  # Ensure this line is present
 
-
 logging.basicConfig(level=logging.DEBUG)
 
 def analyze_text_for_personal_details(text):
@@ -111,7 +110,7 @@ def main():
         ]
 
         for audio_file in audio_files:
-            result = process_audio_file([audio_file], keywords)  # Process a single audio file
+            result = process_audio_file(audio_file, keywords)  # Pass individual audio file
             result_df = pd.DataFrame([result])
             st.write(result_df)
 
@@ -122,4 +121,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
