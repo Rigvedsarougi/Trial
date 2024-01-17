@@ -3,11 +3,10 @@ import re
 from concurrent.futures import ProcessPoolExecutor
 from functools import partial
 import pandas as pd
-from pydub import AudioSegment
-import speech_recognition as sr
 import streamlit as st
 import tempfile
 import logging
+from audio_processing import process_audio_chunk  # Importing the function from the separate module
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -25,19 +24,6 @@ def analyze_text_for_personal_details(text):
 def detect_keywords(input_text, keywords):
     keyword_presence = {keyword: bool(re.search(re.escape(keyword), input_text, re.IGNORECASE)) for keyword in keywords}
     return keyword_presence
-
-def process_audio_chunk(chunk, recognizer):
-    try:
-        chunk.export("temp.wav", format="wav")
-        with sr.AudioFile("temp.wav") as source:
-            audio_data = recognizer.record(source)
-            text = recognizer.recognize_google(audio_data, show_all=True, language='en-US')  # Adjust parameters
-            if 'alternative' in text:
-                text = text['alternative'][0]['transcript']
-            return text
-    except Exception as e:
-        logging.error(f"Error processing audio chunk: {e}")
-        return ""
 
 def process_audio_file(audio_file, keywords):
     recognizer = sr.Recognizer()
