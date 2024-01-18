@@ -29,6 +29,7 @@ def detect_keywords(input_text, keywords):
 
 def process_audio_file(audio_file, keywords):
     recognizer = sr.Recognizer()
+    chunks = []
 
     with tempfile.NamedTemporaryFile(delete=False) as temp_audio_file:
         temp_audio_file.write(audio_file.read())
@@ -49,6 +50,13 @@ def process_audio_file(audio_file, keywords):
             transcription += text + " "
         else:
             unrecognized_chunks_count += 1
+
+    # Close the temporary audio file explicitly
+    temp_audio_file.close()
+
+    # Delete the AudioSegment instances to release memory
+    del audio
+    del results
 
     emails, phones, personal_account_detected = analyze_text_for_personal_details(transcription)
 

@@ -4,6 +4,8 @@ from pydub import AudioSegment
 
 logging.basicConfig(level=logging.DEBUG)
 
+
+
 def process_audio_chunk(chunk, recognizer):
     try:
         chunk.export("temp.wav", format="wav")
@@ -14,5 +16,5 @@ def process_audio_chunk(chunk, recognizer):
                 text = text['alternative'][0]['transcript']
             return text
     except Exception as e:
-        logging.error(f"Error processing audio chunk: {e}")
+        print(f"Error processing audio chunk: {e}")
         return ""
