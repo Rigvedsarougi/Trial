@@ -109,27 +109,15 @@ def main():
             '+ 45 Days Trial Classes'
         ]
 
-        dfs = []  # List to collect individual dataframes
-
         for audio_file in audio_files:
-            result = process_audio_file(audio_file, keywords)
+            result = process_audio_file(audio_file, keywords)  # Pass individual audio file
             result_df = pd.DataFrame([result])
-            dfs.append(result_df)
+            st.write(result_df)
 
             # Release resources for the processed audio file
             del result_df
             del result
             del audio_file
-
-        # Concatenate all dataframes into a final dataframe
-        final_df = pd.concat(dfs, ignore_index=True)
-
-        # Display final dataframe
-        st.write(final_df)
-
-        # Create a download button for the final dataframe
-        csv_data = final_df.to_csv(index=False).encode('utf-8')
-        st.download_button(label="Download Data", data=csv_data, file_name='audio_results.csv', key='download_button')
 
 if __name__ == "__main__":
     main()
