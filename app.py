@@ -36,7 +36,7 @@ def process_audio_file(audio_file, keywords):
 
     audio = AudioSegment.from_mp3(temp_audio_file.name)
 
-    chunk_size_ms = 5000
+    chunk_size_ms = 1000
     chunks = [audio[i:i + chunk_size_ms] for i in range(0, len(audio), chunk_size_ms)]
 
     transcription = ""
