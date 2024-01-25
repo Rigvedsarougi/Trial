@@ -134,7 +134,13 @@ def main():
             result = process_audio_file(audio_file, keywords)  # Pass individual audio file
             result_df = pd.DataFrame([result])
             st.write(result_df)
-
+            csv_data = result_df.to_csv(index=False).encode('utf-8')
+            st.download_button(
+                label="Download Results CSV",
+                data=csv_data,
+                file_name="audio_fraud_detection_results.csv",
+                key="download_button"
+            )
             # Release resources for the processed audio file
             del result_df
             del result
