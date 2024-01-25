@@ -68,7 +68,6 @@ def process_audio_file(audio_file, keywords):
     result = {
         'File Name': audio_file.name,
         'Fraud Detection': 'Fraud detected' if any(keyword_results.values()) else 'Not fraud detected',
-        'Percentage Unrecognized': percentage_unrecognized,
         **keyword_results,
         'Personal Account Detection': 'Personal account detected' if personal_account_detected else 'Personal account not detected',
         'Personal Details': {'Emails': emails, 'Phones': phones}
@@ -92,6 +91,11 @@ def main():
 
     if audio_files:
         keywords = [
+            'Class after token payment',
+            'Upfront Payment',
+            'Bootcamp',
+            'Token amount is refundable',
+            'Get server after 50 percent of total fee',
             'Job guarantee',
             '100% placement guarantee',
             'Personal account',
@@ -114,7 +118,16 @@ def main():
             'Free Days',
             'Free trial',
             'Trial classes',
-            '+ 45 Days Trial Classes'
+            '+ 45 Days Trial Classes',
+            'Free',
+            'Free Days',
+            'Free trial',
+            'Trial classes',
+            'My account',
+            'First month free',
+            'Free services',
+            'cancellation policy',
+            'Cancel'
         ]
 
         for audio_file in audio_files:
