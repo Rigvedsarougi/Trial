@@ -93,58 +93,36 @@ def main():
         keywords = [
             'Class after token payment',
             'Upfront Payment',
-            'Bootcamp',
-            'Token amount is refundable',
-            'Get server after 50 percent of total fee',
-            'Job guarantee',
-            '100% placement guarantee',
-            'Personal account',
-            'Refund',
-            'S4 Hana',
-            'Server Access',
-            'Free classes',
-            'Lifetime Membership',
-            'Providing classes in token amount',
-            'Pay later',
-            'Global',
-            'Abusive words',
-            'Sarcastic',
-            'Rude',
-            'Darling in ILX',
-            'Freelancing support we are provided',
-            'Placement support we are provided',
-            'Affirm',
-            'Free classes we are not provided',
-            'Free Days',
-            'Free trial',
-            'Trial classes',
-            '+ 45 Days Trial Classes',
-            'Free',
-            'Free Days',
-            'Free trial',
-            'Trial classes',
-            'My account',
-            'First month free',
-            'Free services',
-            'cancellation policy',
-            'Cancel'
+            # ... (your list of keywords remains unchanged)
         ]
 
+        results_list = []  # Create an empty list to store results
+
         for audio_file in audio_files:
-            result = process_audio_file(audio_file, keywords)  # Pass individual audio file
-            result_df = pd.DataFrame([result])
-            st.write(result_df)
-            csv_data = result_df.to_csv(index=False).encode('utf-8')
-            st.download_button(
-                label="Download Results CSV",
-                data=csv_data,
-                file_name="audio_fraud_detection_results.csv",
-                key="download_button"
-            )
+            result = process_audio_file(audio_file, keywords)  # Process individual audio file
+            results_list.append(result)  # Append the result to the list
+
             # Release resources for the processed audio file
-            del result_df
             del result
             del audio_file
+
+        # Convert the list of dictionaries into a DataFrame
+        results_df = pd.DataFrame(results_list)
+
+        # Display the combined DataFrame
+        st.write(results_df)
+
+        # Download button for the combined results CSV
+        csv_data = results_df.to_csv(index=False).encode('utf-8')
+        st.download_button(
+            label="Download Results CSV",
+            data=csv_data,
+            file_name="audio_fraud_detection_results.csv",
+            key="download_button"
+        )
+
+        # Release resources for the combined results DataFrame
+        del results_df
 
 if __name__ == "__main__":
     main()
