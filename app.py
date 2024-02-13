@@ -51,10 +51,8 @@ def process_audio_file(audio_file, keywords):
         else:
             unrecognized_chunks_count += 1
 
-    # Close the temporary audio file explicitly
     temp_audio_file.close()
 
-    # Delete the AudioSegment instances to release memory
     del audio
     del results
 
@@ -126,13 +124,12 @@ def main():
             'Cancel'
         ]
 
-        results_list = []  # Create an empty list to store results
+        results_list = []
 
         for audio_file in audio_files:
-            result = process_audio_file(audio_file, keywords)  # Process individual audio file
+            result = process_audio_file(audio_file, keywords)
             results_list.append(result)  # Append the result to the list
 
-            # Release resources for the processed audio file
             del result
             del audio_file
 
