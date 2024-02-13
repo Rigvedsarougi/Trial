@@ -8,7 +8,7 @@ import tempfile
 import logging
 from pydub import AudioSegment
 import speech_recognition as sr
-from audio_processing import process_audio_chunk  # Ensure this line is present
+from audio_processing import process_audio_chunk
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -136,13 +136,10 @@ def main():
             del result
             del audio_file
 
-        # Convert the list of dictionaries into a DataFrame
         results_df = pd.DataFrame(results_list)
 
-        # Display the combined DataFrame
         st.write(results_df)
 
-        # Download button for the combined results CSV
         csv_data = results_df.to_csv(index=False).encode('utf-8')
         st.download_button(
             label="Download Results CSV",
@@ -151,7 +148,6 @@ def main():
             key="download_button"
         )
 
-        # Release resources for the combined results DataFrame
         del results_df
 
 if __name__ == "__main__":
