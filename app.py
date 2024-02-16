@@ -65,7 +65,6 @@ def process_audio_file(audio_file, keywords):
 
     result = {
         'File Name': audio_file.name,
-        'Transcription': transcription,
         'Fraud Detection': 'Fraud detected' if any(keyword_results.values()) else 'Not fraud detected',
         **keyword_results,
         'Personal Account Detection': 'Personal account detected' if personal_account_detected else 'Personal account not detected',
